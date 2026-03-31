@@ -1,0 +1,21 @@
+CLASES
+
+Usuario
+    crear_incidencia(self, id_usuario, descripcion_incidencia, prioridad):
+    describir
+
+Tecnico
+    Actualizar
+    describir
+
+Ticket
+    crear_ticket
+    estado_ticket
+    cerrar_ticket
+
+Equipo #PC lo que se averia
+AtencionTecnica
+    registrar_incidencia
+
+METODOS
+
