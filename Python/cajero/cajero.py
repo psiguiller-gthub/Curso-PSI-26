@@ -3,8 +3,8 @@ class Cuenta:
         self.saldo_cuenta = saldo_cuenta
         self.n_cuenta = n_cuenta
 
-    def consultar_saldo(self, monto):
-        return monto <= self.saldo_cuenta
+    def consultar_saldo(self):
+        return self.saldo_cuenta
 
     def debitar_saldo(self, monto): 
        self.saldo_cuenta -= monto
@@ -20,10 +20,10 @@ class Cajero:
         self.saldo_cajero -= monto
 
 class Transaccion:
-    
+
     def procesar_transaccion(self, cuenta_bancaria, cajero, monto):
-        if monto %10 == 0:
-            if monto <= cuenta_bancaria.saldo_cuenta:
+        if monto % 10 == 0:
+            if monto <= cuenta_bancaria.consultar_saldo():
                 if monto <= cajero.saldo_cajero:
                     cajero.retirar_efectivo(monto)
                     cuenta_bancaria.debitar_saldo(monto)
