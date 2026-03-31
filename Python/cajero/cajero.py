@@ -1,48 +1,33 @@
 class Cuenta:
-    def __init__(self, cliente, saldo_cuenta, n_cuenta):
-        self.cliente = cliente
+    def __init__(self, saldo_cuenta, n_cuenta):
         self.saldo_cuenta = saldo_cuenta
         self.n_cuenta = n_cuenta
 
-    def consultar_saldo(self):
-        print(f"El saldo de la cuenta de {self.cliente} es: {self.saldo_cuenta} euros.")
+    def consultar_saldo(self, monto):
+        return monto <= self.saldo_cuenta
 
-    def debitar_saldo(self, monto):   # falta gestionar el cajero
-        if monto > self.saldo_cuenta:
-            print("No tiene fondos suficientes.")
-        else:
-            self.saldo_cuenta -= monto
-            print(f"Se han retirado {monto} euros de la cuenta de {self.cliente}.")
-
+    def debitar_saldo(self, monto): 
+       self.saldo_cuenta -= monto
+       
 class Cajero:
-    def __init__(self, id_cajero, saldo_cajero):
-        self.id_cajero = id_cajero
+    def __init__(self, saldo_cajero):
         self.saldo_cajero = saldo_cajero
 
     def validar_efectivo_disponible(self, monto):
-        if self.saldo_cajero > monto:
-            print(f"El cajero {self.id_cajero} tiene suficiente efectivo para retirar {monto} euros.")
-            return True
-        else:
-            print(f"El cajero {self.id_cajero} no tiene suficiente efectivo para retirar {monto} euros.")
-            return False
+        return self.saldo_cajero >= monto
 
     def retirar_efectivo(self, monto):
-        if self.validar_efectivo_disponible( monto):
-            self.saldo_cajero = self.saldo_cajero - monto
-            print(f"Se han retirado {monto} euros del cajero {self.id_cajero}.")
-        else:
-            print(f"No se ha podido retirar {monto} euros del cajero {self.id_cajero}.")        
+        self.saldo_cajero -= monto
 
 class Transaccion:
     
-    def procesar_transaccion(cuenta_bancaria, cajero, monto):
+    def procesar_transaccion(self, cuenta_bancaria, cajero, monto):
         if monto %10 == 0:
             if monto <= cuenta_bancaria.saldo_cuenta:
                 if monto <= cajero.saldo_cajero:
                     cajero.retirar_efectivo(monto)
-                    cuenta_bancaria.saldo_cuenta -= monto
-                    print(f"Transacción exitosa: {monto} € retirados de la cuenta de {cuenta_bancaria.cliente}.")
+                    cuenta_bancaria.debitar_saldo(monto)
+                    print(f"Transacción exitosa: {monto} € retirados de la cuenta.")
                 else:
                     print(f"Transacción fallida: El cajero no tiene suficiente efectivo para retirar {monto} €.")    
             else:
@@ -52,14 +37,46 @@ class Transaccion:
 
 # CASOS DE USO  
 
-cliente = "Aniceto"
-saldo_cuenta = 500
+# EXITO
+saldo_cuenta = 1000
 n_cuenta = "ES1234567890"
-cuenta_bancaria = Cuenta(cliente, saldo_cuenta, n_cuenta)
-
 monto = 150
-id_cajero = "1"
-saldo_cajero = 1000
-cajero = Cajero(id_cajero, saldo_cajero)
+saldo_cajero = 500
+cuenta_bancaria = Cuenta(saldo_cuenta, n_cuenta)
+cajero = Cajero(saldo_cajero)
+ejecutar = Transaccion()
+print(f"\nSaldo cuenta: {cuenta_bancaria.saldo_cuenta} € - Saldo cajero: {cajero.saldo_cajero} € - Monto a retirar: {monto} €")
+ejecutar.procesar_transaccion(cuenta_bancaria, cajero, monto)
 
-Transaccion.procesar_transaccion(cuenta_bancaria, cajero, monto)
+# ERROR: Monto no múltiplo de 10
+saldo_cuenta = 1000
+n_cuenta = "ES1234567890"
+monto = 155
+saldo_cajero = 500
+cuenta_bancaria = Cuenta(saldo_cuenta, n_cuenta)
+cajero = Cajero(saldo_cajero)
+ejecutar = Transaccion()
+print(f"\nSaldo cuenta: {cuenta_bancaria.saldo_cuenta} € - Saldo cajero: {cajero.saldo_cajero} € - Monto a retirar: {monto} €")
+ejecutar.procesar_transaccion(cuenta_bancaria, cajero, monto)
+
+# ERROR: Saldo insuficiente en cuenta
+saldo_cuenta = 1000
+n_cuenta = "ES1234567890"
+monto = 1500
+saldo_cajero = 500
+cuenta_bancaria = Cuenta(saldo_cuenta, n_cuenta)
+cajero = Cajero(saldo_cajero)
+ejecutar = Transaccion()
+print(f"\nSaldo cuenta: {cuenta_bancaria.saldo_cuenta} € - Saldo cajero: {cajero.saldo_cajero} € - Monto a retirar: {monto} €")
+ejecutar.procesar_transaccion(cuenta_bancaria, cajero, monto)
+
+# ERROR: Saldo insuficiente en cajero
+saldo_cuenta = 2000
+n_cuenta = "ES1234567890"
+monto = 1500
+saldo_cajero = 500
+cuenta_bancaria = Cuenta(saldo_cuenta, n_cuenta)
+cajero = Cajero(saldo_cajero)
+ejecutar = Transaccion()
+print(f"\nSaldo cuenta: {cuenta_bancaria.saldo_cuenta} € - Saldo cajero: {cajero.saldo_cajero} € - Monto a retirar: {monto} €")
+ejecutar.procesar_transaccion(cuenta_bancaria, cajero, monto)
