@@ -1,0 +1,155 @@
+paso 1 localizar Sustantivos
+
+Sustantivos:
+    
+    parrafo:
+        # Contexto:
+            emplados
+            sistema
+            usuario
+            incidencia
+            equipo
+            problema
+
+        # Registro de incidencias:
+            fallo
+            usuario
+            problema
+            prioridad
+            codigo usuario
+        
+        # Generacion de Tickets:
+            ticket
+            tecnico
+
+        # Gestion y Automatizacion
+            tecnico
+            incidencia
+            estado ticket ("Pendiente" a "En progreso" o "Cerrado")
+
+        # Cierre y Aviso:
+            tecnico
+            averia
+            ticket
+            sistema
+            usuario
+
+Verbos:
+    parrafo:
+        # Contexto:
+            reporte
+            gestionar
+            diagnosticar
+            resolver
+
+        # Registro de incidencias:
+            registrar
+            describir
+            indicar
+            vincular
+        
+        # Generacion de Tickets:
+            reporta
+            crear
+            asignarlo
+
+        # Gestion y Automatizacion
+            revisar
+            actualizar
+
+        # Cierre y Aviso:
+            solucionar
+            cerrar
+            notificar
+
+
+Resumen:
+(elimino duplicados y significado parecido o que no procede para las calses)
+    Sustantivos:
+        sistema
+        usuario
+        incidencia
+        equipo
+        problema
+        fallo
+        prioridad
+        tecnico
+        estado ticket ("Pendiente" a "En progreso" o "Cerrado")
+        averia
+
+
+    Verbos:
+        gestionar
+        registrar
+        describir
+        indicar
+        vincular
+        crear
+        asignarlo
+        actualizar
+        cerrar
+        notificar
+
+
+
+Comprension y Clases:
+
+El problema plantea un sistema helpdesk:
+Los usuarios generan los tickets,
+un ticket es asignado automaticamente a un tecnico por el sistema
+el tecnico llevara el ticket y cambiara su estado
+una vez cerrado el ticket se notifica al usuario
+
+- el usuario dispone de un id
+    abre tickets
+    recibe notificaciones
+
+- el ticket tiene descripcion, prioridad, id del usuario que lo ha abierto, tecnico asignado
+    (lo habre el usuario y lo gestiona el tecnico)
+    solo contiene parametros
+
+- tecnico tiene su id,
+    actualiza el estado del ticket
+    cerrar el ticket
+
+- el sistema tendra una lista de tecnicos disponibles
+
+# nota 1: El enuenciado no menciona cuantos tickets abiertos puede tener un tecnico
+# nota 2: no menciona cuantos tecnicos y usuarios hay o puede haber
+
+
+Clases, parametros y metodos:
+
+Clases:
+    usuario
+        id_usuario -> int unico
+        recivir_notificacion_cierre_ticket(mensaje) (ver nota 1)
+
+
+    tecnico
+        id_tecnico  -> int unico
+        ticket_asignado -> ticket (solo uno)(ver nota 2)
+
+
+    ticket
+        id_ticket -> int unico
+        estado -> int ( 3= Pendiente, 2= En progreso, 1= Cerrado)
+        descripcion -> str
+        prioridad -> int (1 alto, > bajo) (usar un int)
+        usuario -> usuario 
+        tecnico -> tecnico
+
+
+    sistema
+        crear_ticket(usuario, descripcion, prioridad, lista_tecnicos) return ticket 
+        actualizar_estado_ticket(tecnico, nuevo_estado -> int )
+        cerrar_ticket(ticket) 
+
+        - buscar_tecnico_disponible() #funcion de soporte para crear ticket
+
+notas:
+1 hecho asi por el produto minimo viable, espero que sea facil de refactorizar si se  
+amplia, el enunciado solo menciona que recive una notificacion de la resolucion, no el medio,
+la coloco ahy por ser el lugar mas natural 
+
+2 producto minim viable
