@@ -1,0 +1,36 @@
+Main.java
+Habitacion.java
+Sencilla.java
+Doble.java
+Suite.java
+
+Cliente.java
+  +metodo01()
+  +metodo02()
+Front.java
+  -atributo01
+  -atributo02
+  +metodo01()
+  +metodo02()
+Reserva.java
+  -atributo01
+  -atributo02
+  +metodo01()
+  +metodo02()
+PedirDatos.java
+
+
+Habitacion
+numero
+ocupada
+cama
+precio
+vistas
+disponible
+
++reservar
++habilitar // CAMBIAR el estado de disponible
+
+Setters Y Getters
+
+refactorizar - pasar tipocama y vistas al mar al padre
