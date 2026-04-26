@@ -1,0 +1,14 @@
+D:\Mi unidad\Guille\C#\Gestion_inventario\bin\Debug\net10.0\Gestion_inventario.exe
+D:\Mi unidad\Guille\C#\Gestion_inventario\bin\Debug\net10.0\Gestion_inventario.deps.json
+D:\Mi unidad\Guille\C#\Gestion_inventario\bin\Debug\net10.0\Gestion_inventario.runtimeconfig.json
+D:\Mi unidad\Guille\C#\Gestion_inventario\bin\Debug\net10.0\Gestion_inventario.dll
+D:\Mi unidad\Guille\C#\Gestion_inventario\bin\Debug\net10.0\Gestion_inventario.pdb
+D:\Mi unidad\Guille\C#\Gestion_inventario\obj\Debug\net10.0\Gestion_inventario.GeneratedMSBuildEditorConfig.editorconfig
+D:\Mi unidad\Guille\C#\Gestion_inventario\obj\Debug\net10.0\Gestion_inventario.AssemblyInfoInputs.cache
+D:\Mi unidad\Guille\C#\Gestion_inventario\obj\Debug\net10.0\Gestion_inventario.AssemblyInfo.cs
+D:\Mi unidad\Guille\C#\Gestion_inventario\obj\Debug\net10.0\Gestion_inventario.csproj.CoreCompileInputs.cache
+D:\Mi unidad\Guille\C#\Gestion_inventario\obj\Debug\net10.0\Gestion_inventario.dll
+D:\Mi unidad\Guille\C#\Gestion_inventario\obj\Debug\net10.0\refint\Gestion_inventario.dll
+D:\Mi unidad\Guille\C#\Gestion_inventario\obj\Debug\net10.0\Gestion_inventario.pdb
+D:\Mi unidad\Guille\C#\Gestion_inventario\obj\Debug\net10.0\Gestion_inventario.genruntimeconfig.cache
+D:\Mi unidad\Guille\C#\Gestion_inventario\obj\Debug\net10.0\ref\Gestion_inventario.dll
