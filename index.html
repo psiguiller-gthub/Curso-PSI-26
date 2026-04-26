@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Monitor de Incidencias</h1>
+    <button onclick="ver()">Cargar Datos</button>
+    <div id="lista"></div>
+
+    <script>
+        async function ver() {
+            const res = await fetch('/api/incidencias');
+            const data = await res.json();
+            document.getElementById('lista').innerText = JSON.stringify(data);
+        }
+    </script>
+</body>
+</html>
