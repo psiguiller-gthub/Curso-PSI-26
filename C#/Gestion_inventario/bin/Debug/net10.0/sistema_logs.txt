@@ -1,3 +1,0 @@
-[2026-04-25 19:29:18] [INFO] Aplicación iniciada por el usuario.
-[2026-04-25 19:29:33] [INFO] Producto 'caja' añadido correctamente.
-[2026-04-25 19:29:39] [INFO] Aplicación cerrada.
