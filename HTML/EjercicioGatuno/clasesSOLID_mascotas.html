@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Calculadora de edad de Mascotas</title>
+</head>
+<body>
+ <h1>¿Cuántos años tiene tu mascota realmente?</h1>
+ <p>Introduce la edad de tu mascota para descubrir su edad equivalente como mascota.</p>
+ <form id="formulario-mascota">
+  <input type="number" id="edad-mascota" placeholder="Edad de la mascota" required>
+  <button type="submit" id="btn-calcular">Calcular Edad Mascotas</button>
+ </form>
+ <h3 id="resultado-mascota">Resultado: -</h3>
+
+ <script>  
+
+ // AQUÍ IRÁ EL CÓDIGO JAVASCRIPT
+    const msjEdadInvalida = "Por favor, introduce una edad válida.";    
+    const msjEdadMascotas = " años de la mascota.";    
+    const colorError = "red";
+    const colorExito = "blue";
+    const valorInvalido = 0; 
+    const factorConversion = 7;    
+
+
+    class AgeCalculator {  // Lógica de negocio.
+    constructor(factorConversion) {
+        this.factorConversion = factorConversion;
+    }
+
+    calcularEdad(edad) {
+        return edad * this.factorConversion;
+    }
+
+    isValidAge(edad) {
+        return edad > 0;
+    }
+
+    convertToHumanYears(edad) {
+        return edad / this.factorConversion;
+    }
+}
+
+    class DOMManager { // Interfaz de Usuario
+        constructor() {
+            this.formulario = document.querySelector('#formulario-mascota');
+            this.inputEdad = document.querySelector('#edad-mascota');
+            this.botonCalcular = document.querySelector('#btn-calcular');
+            this.resultado = document.querySelector('#resultado-mascota');
+        }
+
+    getInputValue() {
+        return Number(this.inputEdad.value);
+    }
+
+    renderMessage = (mensaje, color) => {
+        this.resultado.textContent = mensaje;
+        this.resultado.style.color = color;
+    }
+
+    bindCalculateEvent(handler) {  // Evento para el botón de calcular
+        this.formulario = document.querySelector('#formulario-mascota');
+        this.formulario.addEventListener('submit', (event) => {
+            event.preventDefault(); // Evita recargar la página
+            handler();
+        });
+    }
+
+}    
+
+class AppController { // Controlador Principal
+    constructor(AgeCalculator, DOMManager) {
+        this.AgeCalculator = AgeCalculator;
+        this.DOMManager = DOMManager;
+    }
+
+    init() {
+        this.DOMManager.bindCalculateEvent(
+            this.handleCalculation.bind(this)
+        );
+    }
+
+    handleCalculation() {
+        const edad = this.DOMManager.getInputValue();
+
+        if (!this.AgeCalculator.isValidAge(edad)) {
+            this.DOMManager.renderMessage(msjEdadInvalida, colorError);
+        } else {
+            const resultado = this.AgeCalculator.calcularEdad(edad);
+            this.DOMManager.renderMessage(resultado + msjEdadMascotas, colorExito);
+        }
+    }
+}
+
+// ARRANQUE DE LA APLICACIÓN
+const app = new AppController(new AgeCalculator(7), new DOMManager());
+    app.init();
+       
+</script>
+</body>
+</html>

@@ -1,1 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Calculadora Gatuna</title>
+</head>
+<body>
+ <h1>¿Cuántos años tiene tu gato realmente?</h1>
+ <p>Introduce la edad de tu mascota para descubrir su edad gatuna equivalente.</p>
+ <form id="formulario-gato">
+  <input type="number" id="edad" placeholder="Edad en años humanos" required>
+  <button type="button" id="btn-calcular">Calcular Edad Gatuna</button>
+ </form>
+ <h3 id="resultado-gato">Resultado: -</h3>
 
+ <script>
+ // AQUÍ IRÁ EL CÓDIGO JAVASCRIPT
+    const msjEdadInvalida = "Por favor, introduce una edad válida.";    
+    const msjEdadGatuna = " años gatunos.";    
+    const colorError = "red";
+    const colorExito = "blue";
+    const valorInvalido = 0; 
+    const valorConversion = 7;    
+    
+    const contenedorResultado = document.querySelector('#resultado-gato');
+
+    const mostrarResultado = (mensaje, color) => {
+        contenedorResultado.textContent = mensaje;
+        contenedorResultado.style.color = color;
+    }
+
+    const botonCalcular = document.querySelector('#btn-calcular');
+
+    botonCalcular.addEventListener('click', () => {
+        const isInvalidAge = (edad) => edad <= valorInvalido; // Función para validar que la edad sea mayor a 0.
+        const calcularEdadGatuna = (edad) => edad * valorConversion; // Función para calcular la edad gatuna multiplicando la edad humana por 7.
+        const edad = Number(document.querySelector('#edad').value);
+        if (isInvalidAge(edad)) {
+            mostrarResultado(msjEdadInvalida, colorError);
+        } else {
+            resultado = calcularEdadGatuna(edad);
+            mostrarResultado(resultado + msjEdadGatuna, colorExito);
+        }
+    });
+
+</script>
+</body>
+</html>

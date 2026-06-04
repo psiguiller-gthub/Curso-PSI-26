@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Calculadora de edad de Mascotas</title>
+</head>
+<body>
+ <h1>¿Cuántos años tiene tu mascota realmente?</h1>
+ <p>Introduce la edad de tu mascota para descubrir su edad equivalente como mascota.</p>
+ <form id="formulario-mascota">
+  <input type="number" id="edad-mascota" placeholder="Edad de la mascota" required>
+  <button type="submit" id="btn-calcular">Calcular Edad Mascotas</button>
+  <div><br><br>
+    <label>Seleccione mascota</label><br><br>
+
+    <input type="radio" id="radio_perro" name="radio_mascota" value="perro" checked>
+    <label for="radio_perro">Perro (7)</label><br>
+
+    <input type="radio" id="radio_gato" name="radio_mascota" value="gato">
+    <label for="radio_gato">Gato (5)</label><br>
+
+    <input type="radio" id="radio_pato" name="radio_mascota" value="pato">
+    <label for="radio_pato">Pato (2)</label><br><br>
+    </div>
+
+    <label for="select_mascota">Seleccione mascota:</label>
+
+<select id="select_mascota">
+    <option value="7">Perro (7)</option>
+    <option value="5">Gato (5)</option>
+    <option value="2">Pato (2)</option>
+</select>
+ </form>
+ <h3 id="resultado-mascota">Resultado: -</h3>
+
+ <script>  
+
+ // AQUÍ IRÁ EL CÓDIGO JAVASCRIPT
+    const msjEdadInvalida = "Por favor, introduce una edad válida.";    
+    const msjEdadMascotas = " años de la mascota.";    
+    const colorError = "red";
+    const colorExito = "blue";
+    const valorInvalido = 0; 
+    const factorConversion = 7;    
+
+
+    class AgeCalculator {  // Lógica de negocio.
+    constructor(factorConversion) {
+        this.factorConversion = factorConversion;
+    }
+
+    setFactor(factor) {
+        this.factorConversion = factor; 
+    }
+
+    calcularEdad(edad) {
+        return edad * this.factorConversion;
+    }
+
+    isValidAge(edad) {
+        return edad > 0;
+    }
+
+    convertToHumanYears(edad) {
+        return edad / this.factorConversion;
+    }
+}
+
+    class DOMManager { // Interfaz de Usuario
+        constructor() {
+            this.formulario = document.querySelector('#formulario-mascota');
+            this.inputEdad = document.querySelector('#edad-mascota');
+            this.botonCalcular = document.querySelector('#btn-calcular');
+            this.resultado = document.querySelector('#resultado-mascota');
+            this.radiosMascota = document.querySelectorAll('input[name="radio_mascota"]');
+            this.selectMascota = document.querySelector('#select_mascota');
+        }
+
+    getInputValue() {
+        return Number(this.inputEdad.value);
+    }
+
+    getSelectedPetRadio() {
+        return document.querySelector(
+            'input[name="radio_mascota"]:checked'
+        ).value;        
+    }
+    getSelectedPetDesplegable() {
+        return this.selectMascota.value;
+    }
+
+    bindSelectChangeEvent(handler) {
+        this.selectMascota.addEventListener('change', handler);
+    }
+
+    renderMessage = (mensaje, color) => {
+        this.resultado.textContent = mensaje;
+        this.resultado.style.color = color;
+    }
+
+    bindCalculateEvent(handler) {  // Evento para el botón de calcular
+        this.formulario = document.querySelector('#formulario-mascota');
+        this.formulario.addEventListener('submit', (event) => {
+            event.preventDefault(); // Evita recargar la página
+            handler();
+        });
+    }
+
+    bindPetChangeEvent(handler) {
+        this.radiosMascota.forEach(radio => {
+            radio.addEventListener('change', () => {
+                handler(radio.value);
+            });
+        });
+    }
+
+    bindAgeInputEvent(handler) {
+        this.inputEdad.addEventListener('input', () => {
+            handler();
+        });
+    }
+}    
+
+class AppController { // Controlador Principal
+    constructor(AgeCalculator, DOMManager) {
+        this.AgeCalculator = AgeCalculator;
+        this.DOMManager = DOMManager;
+    }
+
+    init() {
+        this.DOMManager.bindCalculateEvent(
+            this.handleCalculation.bind(this)
+        );
+        this.DOMManager.bindPetChangeEvent(
+            this.handlePetChange.bind(this)
+        );
+        this.DOMManager.bindAgeInputEvent(
+            this.handleCalculation.bind(this)   
+        );
+        this.DOMManager.bindSelectChangeEvent(
+            this.handlePetChangeRadio.bind(this)
+        );
+    }
+
+    handlePetChangeRadio() {
+        const mascota = this.DOMManager.getSelectedPetRadio();
+        
+        const factores = {
+            perro: 7,
+            gato: 5,
+            pato: 2
+        };
+
+        this.AgeCalculator.setFactor(
+            factores[mascota]
+        );
+
+    handlePetChangeDesplegable() {
+        this.AgeCalculator.setFactor(
+        Number(this.DOMManager.getSelectedPetDesplegable())
+    );
+    
+    console.log(`Has seleccionado: ${mascota}`);
+
+    this.handleCalculation();  // Recalcula la edad al cambiar de mascota
+    }
+
+    handleCalculation() {
+        const edad = this.DOMManager.getInputValue();
+
+        if (!this.AgeCalculator.isValidAge(edad)) {
+            this.DOMManager.renderMessage(msjEdadInvalida, colorError);
+        } else {
+            const resultado = this.AgeCalculator.calcularEdad(edad);
+            this.DOMManager.renderMessage(resultado + msjEdadMascotas, colorExito);
+        }
+    }
+}
+// ARRANQUE DE LA APLICACIÓN
+const app = new AppController(new AgeCalculator(7), new DOMManager());
+    app.init();
+       
+</script>
+</body>
+</html>
