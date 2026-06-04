@@ -1,0 +1,12 @@
+/* Convierte el label en bloque para separarlo del input */
+.nombre.campo-grupo label {
+  display: block;             
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+/* Pinta el asterisco de color rojo */
+.nombre.asterisco-obligatorio {
+  color: #ff0000; /* Color rojo */
+  margin-left: 4px; /* Pequeño espacio horizontal antes del asterisco */
+}

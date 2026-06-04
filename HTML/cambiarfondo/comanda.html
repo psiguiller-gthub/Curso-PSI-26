@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comanda Pizza</title>
+</head>
+<body>
+<h1>Comanda de Pizza</h1>
+<form id="comandaPizza">
+    <label for="pizza">Pizza:</label>
+        <select id="pizza" name="pizza" required>
+            <option value="9.95">Primavera 9,95 €</option>
+            <option value="12.45">4 Quesos 12,45 €</option>
+            <option value="15.90">Barbacoa 15,90 €</option>
+        </select>
+
+        <h4>Suplementos:</h4>
+    <div id="suplementos">
+        <input type="checkbox" id="suplemento1" name="Suplementos" value="2">Borde Queso 2 €<br>
+        <input type="checkbox" id="suplemento2" name="Suplementos" value="1.5">Queso Extra 1,5 €<br>
+        <input type="checkbox" id="suplemento3" name="Suplementos" value="1">Piña 1 €<br>
+        <input type="checkbox" id="suplemento4" name="Suplementos" value="3">Peperoni 3 €<br>
+        <input type="checkbox" id="suplemento5" name="Suplementos" value="0.5">Champiñones 0,5 €<br>
+        <br></div>
+
+    <div class="grupo">
+        <h4>Tipo de envío:</h4>
+        <input type="radio" name="envio" value="0" checked> Recoger en Tienda (0 €)<br>
+        <input type="radio" name="envio" value="2"> Express (2 €)<br>
+        <input type="radio" name="envio" value="5"> Luxe (5 €)<br>
+        <br>
+    </div>
+
+    <!-- Botón para calcular -->
+    <button onclick="calcular()" type="button" id="btnCalcular" style="padding: 6px 12px; cursor: pointer;">
+        Calcular el total
+    </button>
+
+    <p id="resultado"></p>
+</form>
+
+<!-- Contenedor para mostrar el total -->
+<p style="font-family: sans-serif; font-weight: bold; margin-top: 20px; font-size: 18px;">
+    Total: <span id="total">0.00</span>€
+</p>
+<script>
+    function calcular() {
+        // Pizza seleccionada
+        const pizzaPrice = document.getElementById('pizza').value;
+    
+        // Suplementos seleccionados
+        const suplementos = document.querySelectorAll('input[name="Suplementos"]:checked');
+
+
+
+
+
+
+
+
+
+
+
+
+
+    btnCalcular.addEventListener('click', () => {
+        const formData = new FormData(comandaPizza);
+        let total = 0;
+
+        // Calcular el precio de la pizza
+        total += parseFloat(formData.get('pizza'));
+
+        // Calcular el precio de los suplementos
+        const suplementos = formData.getAll('Suplementos');
+        suplementos.forEach(suplemento => {
+            total += parseFloat(suplemento);
+        });
+
+        // Calcular el precio del envío
+        total += parseFloat(formData.get('envio'));
+
+        // Mostrar el resultado
+        resultado.innerHTML =`
+          Pizza: <b>${pizzaPrice.toFixed(2)} €</b><br>
+          Suplementos: <b>${suplementos.toFixed(2)} €</b><br>
+          Envío: <b>${envioPrice.toFixed(2)} €</b><br><br>
+          Total a pagar: <b>${total.toFixed(2)} €</b>
+        `;
+
+    });
+    }
+</script>
+</body>
+</html>
+/*
+<!-- mostrar un precio al lado de la pizza seleccionada en el desplegable
+https://www.google.com/search?q=a%C3%B1adir+radiobutton+html&sca_esv=17fe74d01cd78b0f&sxsrf=ANbL-n5B5NmSJLRe0uSAMGksC9OnUdQOKQ%3A1770136089541&source=hp&ei=GSKCaYCBH7qkhbIP38T2qA0&iflsig=AFdpzrgAAAAAaYIwKVFTxvwAE5NkzMA93c3bVjj2U2nb&aep=22&ved=0ahUKEwjA8cbm3r2SAxU6UkEAHV-iHdUQteYPCBk&oq=&gs_lp=Egdnd3Mtd2l6IgBIAFAAWABwAHgAkAEAmAEAoAEAqgEAuAEByAEAmAIAoAIAmAMAkgcAoAcAsgcAuAcAwgcAyAcAgAgA&sclient=gws-wiz&mstk=AUtExfARSBad8hF_umx2aiBRyfDRG2v-npWq6sCfWYZObH_zyFvo2QML2iJ_7rvnfefP5HMTZ_5PVpBv4Ug0omQUYPEMDrCw4b3pZjJSmsh5N_x5lhKRpyDxebrnQae5Fj0Sf_yKMKqHCjlulaA9tuqe8THN1isRpfgBpimnyv5Fkk0oYo2lXW-qHGOmg1dNGu8c_V8cJ7JDZOOMAQMkYPTTkAgnS8DI3hRHzm-GuugrkI4ZEIwSVv_XpbAeTH5TiZlgZG45bYADAQxA1K-UE_vEQzmZSN1Rl7tefFI&csuir=1&mtid=nRMLatS_MeOkkdUPz4O-gAs&udm=50
+
+
+  -->

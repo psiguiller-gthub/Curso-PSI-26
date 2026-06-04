@@ -1,0 +1,53 @@
+<!DOCTYPE html encoding="UTF-8">
+<html lang="es">
+<head>    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css_formulario.css">
+    <title>Calcular Envio</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #ddc0c0;
+        }
+
+        .grupo {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="grupo">
+        <label for="cantidad">Importe del pedido (€):</label>
+        <input type="number" id="cantidad" min="0" placeholder="Ej: 50" >
+    </div>
+
+    <form id="Calcular">
+        <div class="grupo">
+            <input type="radio" id="Normal" name="Envio" value="5" checked>Normal 5€
+            <input type="radio" id="Urgente" name="Envio" value="15">Urgente 15€
+            <input type="radio" id="MuyMuyUrgente" name="Envio" value="25">Muy Muy Urgente 25€
+        </div>
+
+        <button type="button" id="btnCalcular" style="margin-top: 15px;">Calcular el total</button>
+    </form>
+
+    <div class="grupo">
+        <label for="resultado">Total a pagar (€):</label>
+        <input type="text" id="resultado" readonly>
+    </div>
+
+    <script>
+        const Calcular = document.getElementById('Calcular');
+        const resultadoDiv = document.getElementById('resultado');
+
+        Calcular.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+      
+            let costoEnvio;
+            
+            resultadoDiv.textContent = `El costo de envío es: $${costoEnvio.toFixed(2)}`;
+        });
+    </script>
+</body>
+</html>

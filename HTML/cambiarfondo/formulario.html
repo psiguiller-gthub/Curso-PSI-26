@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css_formulario.css">
+    <title>Formulario de Intereses y Gustos</title>
+</head>
+
+<body>
+    <h1>Formulario de Intereses y Gustos</h1>
+
+    <form>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required placeholder="Escribe tu nombre melón"><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="intereses">Intereses:</label><br>
+        <textarea id="intereses" name="intereses" rows="10" cols="50"></textarea><br><br>
+
+        <label>Gustos:</label><br>
+        <input type="checkbox" id="check_gusto1" name="gustos_checkbox" value="gusto1" onclick="seleccionarUnico(this)">
+        <label for="check_gusto1">Gusto 1</label><br>
+
+        <input type="checkbox" id="check_gusto2" name="gustos_checkbox" value="gusto2" onclick="seleccionarUnico(this)">
+        <label for="check_gusto2">Gusto 2</label><br>
+
+        <input type="checkbox" id="check_gusto3" name="gustos_checkbox" value="gusto3" onclick="seleccionarUnico(this)">
+        <label for="check_gusto3">Gusto 3</label><br><br>
+
+        <label>Gustos con radio:</label><br>
+        <input type="radio" id="radio_gusto1" name="gustos_radio" value="gusto1">
+        <label for="radio_gusto1">Gusto 1</label><br>
+
+        <input type="radio" id="radio_gusto2" name="gustos_radio" value="gusto2">
+        <label for="radio_gusto2">Gusto 2</label><br>
+
+        <input type="radio" id="radio_gusto3" name="gustos_radio" value="gusto3">
+        <label for="radio_gusto3">Gusto 3</label><br><br>
+
+        <select id="tipoNotificacion">
+            <option value="">-- Seleccione una opción --</option>
+            <option value="email">Email</option>
+            <option value="sms">SMS</option>
+        </select><br><br>
+
+        <p id="resultado"></p>
+
+        <input type="button" value="Cancelar" onclick="window.location.href='formulario.html'">
+        <input type="submit" value="Enviar">        
+    </form>
+
+    <script>
+        function seleccionarUnico(checkboxSeleccionado) {
+            let checkboxes = document.getElementsByName('gustos_checkbox');
+            checkboxes.forEach((checkbox) => {
+                if (checkbox !== checkboxSeleccionado) {
+                    checkbox.checked = false;
+                }
+            });
+        }
+
+        function mostrarSeleccion() {
+
+            let seleccion =
+                document.getElementById("tipoNotificacion").value;
+
+            let resultado =
+                document.getElementById("resultado");
+
+            if (seleccion === "email") {
+
+                resultado.innerHTML =
+                    "Notificación enviada por Correo Electrónico.";
+
+            } else if (seleccion === "sms") {
+
+                resultado.innerHTML =
+                    "Notificación enviada por SMS.";
+
+            } else {
+
+                resultado.innerHTML =
+                    "Seleccione una opción válida.";
+            }
+        }
+    </script>
+</body>
+
+</html>

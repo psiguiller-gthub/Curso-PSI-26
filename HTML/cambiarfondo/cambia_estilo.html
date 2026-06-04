@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio: Cambiar Estilo por ID</title>
+    <style>
+        #caja-objetivo {
+            width: 200px;
+            height: 200px;
+            border: 2px solid #333;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: sans-serif;
+            transition: background-color 0.8s ease;
+            background-color: #53ec42;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h2>Selecciona un color de fondo:</h2>
+
+
+    <label>
+        <input type="radio" name="selector-color" value="red"> Rojo
+    </label>
+    
+    <label>
+        <input type="radio" name="selector-color" value="pink"> Rosa
+    </label>
+    
+    <label>
+        <input type="radio" name="selector-color" value="green"> Verde
+    </label>
+
+
+    <div id="caja-objetivo">
+        ¡Cambia mi estilo!
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+
+        const caja = document.getElementById('caja-objetivo');
+
+
+        const opcionesColor = document.querySelectorAll('input[name="selector-color"]');
+
+
+        opcionesColor.forEach(function(radio) {
+            radio.addEventListener('change', function() {
+
+                caja.style.backgroundColor = this.value;
+            });
+        });
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html encoding="UTF-8">
+<html lang="es">
+<head>    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css_formulario.css">
+    <title>Calcular Envio</title>
+    <class="grupo">
+         </class>
+
+</head>
+<body>
+<form id="CalcularEnvio">
+    <!-- Nuevo: Input numérico para el precio del producto -->
+    <div>
+        <label for="precioProducto" style="font-weight: bold;">Precio del Producto (€):</label><br>
+        <input type="number" id="precioProducto" min="0" step="1.0" value="0" style="padding: 5px; margin-top: 5px; width: 100px;">
+    </div>
+
+    <!-- Opciones de envío -->
+    <div class="grupo" style="font-family: sans-serif; margin-bottom: 15px;">
+        <span style="font-weight: bold;">Tipo de envío:</span><br>
+        <input type="radio" id="Normal" name="Envio" value="5" checked> Normal 5€ <br>
+        <input type="radio" id="Urgente" name="Envio" value="15"> Urgente 15€ <br>
+        <input type="radio" id="MuyMuyUrgente" name="Envio" value="25"> Muy Muy Urgente 25€ <br>
+    </div>
+    
+    <!-- Botón para calcular -->
+    <button type="button" id="btnCalcular" style="padding: 6px 12px; cursor: pointer;">
+        Calcular el total
+    </button>
+</form>
+
+<!-- Contenedor para mostrar el total -->
+<p style="font-family: sans-serif; font-weight: bold; margin-top: 20px; font-size: 18px;">
+    Total: <span id="totalVisual">0.00</span>€
+</p>
+
+<script>
+    // Variables globales
+    let total = 0;
+    const btnCalcular = document.getElementById('btnCalcular');
+    const totalVisual = document.getElementById('totalVisual');
+    const inputPrecio = document.getElementById('precioProducto');
+
+    // Evento del botón
+    btnCalcular.addEventListener('click', () => {
+        // 1. Obtener y validar el precio del producto (usamos parseFloat para permitir decimales)
+        let precioProducto = parseFloat(inputPrecio.value);
+        
+        // Si el campo está vacío o es un número no válido, lo dejamos en 0
+        if (isNaN(precioProducto) || precioProducto < 0) {
+            precioProducto = 0;
+        }
+
+        // 2. Obtener el coste del envío seleccionado
+        const radioSeleccionado = document.querySelector('input[name="Envio"]:checked');
+        const costeEnvio = parseInt(radioSeleccionado.value);
+        
+        // 3. Calcular el subtotal de esta operación
+        const subtotalOperacion = precioProducto + costeEnvio;
+        
+        // 4. Sumar al gran total acumulado
+        total += subtotalOperacion;
+
+        // 5. Mostrar en pantalla redondeando a 2 decimales para los céntimos
+        totalVisual.textContent = total.toFixed(2);
+
+    });
+</script>
+
+</body>
+</html>

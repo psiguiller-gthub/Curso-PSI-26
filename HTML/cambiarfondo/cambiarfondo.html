@@ -1,0 +1,52 @@
+<!DOCTYPE html encoding="UTF-8">
+<html lang="es">
+<head>    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css_formulario.css">
+    <title>Cambiar Fondo</title>
+</head>
+<body>     
+    <form>
+  <p>Selecciona tu color favorito:</p>
+
+  <input type="radio" id="Rojo" name="color" value="#ff4d4d">
+  <label for="Rojo">Rojo</label><br>
+
+  <input type="radio" id="Verde" name="color" value="#4dff4d">Verde<br> 
+
+  <input type="radio" id="Azul" name="color" value="#4da6ff">Azul<br>
+  
+</form>
+
+<!-- Elemento HTML -->
+<div id="cuadrado-gris">Cambiame de color</div>
+
+<!-- Estilos CSS (puedes colocarlos en tu etiqueta <style> o archivo .css) -->
+<style>
+  #cuadrado-gris {  /* # para ID, punto para clase */ /* Estilos para el cuadrado gris */
+    width: 200px;   
+    height: 200px;
+    display: flex;
+    justify-content: center;  /* Centrado horizontal */
+    align-items: center;      /* Centrado vertical */
+    background-color: #808080; /* Color gris estándar */
+  }
+</style>
+
+<!-- 3. Lógica JavaScript -->
+<script>
+  // Seleccionamos el cuadrado y todos los radiobuttons del grupo
+  const cuadrado = document.getElementById('cuadrado-gris');
+  const opcionesColor = document.querySelectorAll('input[name="color"]');
+
+  // Recorremos cada radiobutton para añadirle el evento de escucha
+  opcionesColor.forEach(radio => {
+    radio.addEventListener('change', (event) => {
+      // Al cambiar, asignamos el valor (value) del radio seleccionado como color de fondo
+      cuadrado.style.backgroundColor = event.target.value;
+    });
+  });
+</script>
+
+</body>
+</html>
