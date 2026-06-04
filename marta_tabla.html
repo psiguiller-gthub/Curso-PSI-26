@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="estilo.css">
+    <title>Tabla clientes</title>
+</head>
+<body>
+
+<h2>Tabla clientes</h2>
+
+<button onclick="mostrarTabla()">Mostrar tabla</button>
+
+<div id="clientes"></div>
+
+<script>
+const clientes = [
+    { nombre: "Juan", edad: 34, ciudad: "Valencia" },
+    { nombre: "Marta", edad: 30, ciudad: "Valencia" },
+    { nombre: "Luis", edad: 28, ciudad: "Barcelona" },
+    { nombre: "María", edad: 35, ciudad: "Sevilla" },
+    { nombre: "Carlos", edad: 22, ciudad: "Bilbao" }
+];
+
+function mostrarTabla() {
+
+let tabla = `
+<table border="1">
+    <tr>
+        <th>Nombre</th>
+        <th>Edad</th>
+        <th>Ciudad</th>
+    </tr>
+`;
+
+for (let c of clientes) {
+    tabla += `
+    <tr>
+        <td>${c.nombre}</td>
+        <td>${c.edad}</td>
+        <td>${c.ciudad}</td>
+    </tr>
+    `;
+}
+
+tabla += `</table>`;
+
+document.getElementById("clientes").innerHTML = tabla;
+}
+</script>
+
+</body>
+</html>
