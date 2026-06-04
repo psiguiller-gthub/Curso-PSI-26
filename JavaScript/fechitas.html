@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="formulario-division">
+        <h1>Discoteca</h1>
+        <input type="number" id="edad" placeholder="Edad para portero" required>
+        <button type="button" id="btn-portero">Portero</button>
+    </form>
+
+    <h3 id="resultado">Resultado: </h3>
+
+    <script>
+        const isMayorEdad = edad => edad >= 18;  // Operador ternario para evaluar si la edad es mayor o igual a 18.
+
+        const botonPortero = document.querySelector('#btn-portero');
+
+        const contenedorResultado = document.querySelector('#resultado');
+
+        const mostrarResultado = (mensaje, color) => {
+            contenedorResultado.textContent = mensaje;
+            contenedorResultado.style.color = color;
+        }
+
+        botonPortero.addEventListener('click', () => {
+            const edad = Number(document.querySelector('#edad').value);
+            if (isMayorEdad(edad)) {
+                // contenedorResultado.textContent = "Resultados: Puedes entrar";
+                // contenedorResultado.style.color = "green";
+                mostrarResultado("Resultados: Puedes entrar", "green");
+            } else {
+                mostrarResultado("Resultados: No puedes entrar", "red");
+            }
+        });
+    </script>
+</body>
+
+</html>

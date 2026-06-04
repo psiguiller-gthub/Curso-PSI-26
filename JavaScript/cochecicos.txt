@@ -1,0 +1,16 @@
+JavaScript
+-----------
+
+coches y motos
+
+- arrancar();
+- apagar();
+- acelerar();
+- frenar();
+- ponerIntermitente();
+- quitarIntermitente();
+
+class      clases
+funtion    funciones
+const      constantes (aunque se pueden modificar) myfuncion =
+let        variables

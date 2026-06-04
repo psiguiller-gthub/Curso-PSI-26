@@ -1,0 +1,14 @@
+<html>
+<head>
+    <!-- Configuración, títulos de pestaña, estilos -->
+</head>
+<body>
+    <header>Cabecera</header>
+    <main>Contenido principal</main>
+    
+    <footer>
+        <!-- El footer va aquí, antes de cerrar el body -->
+        <p>© 2024 Tu Nombre - Todos los derechos reservados</p>
+    </footer>
+</body>
+</html>
