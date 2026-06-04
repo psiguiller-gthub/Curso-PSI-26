@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Mascotuna.v6</title>
+</head>
+
+<body>
+    <h1>¿Cuántos años tiene tu mascota realmente?</h1>
+    <p>Introduce la edad de tu mascota para descubrir su edad equivalente.</p>
+    
+    
+    <form id="formulario-mascota">
+        <label for="tipo-mascota">Tipo de mascota:</label>
+        
+        <select id="tipo-mascota" required>
+            <option value="7">Perro (Factor 7)</option>
+            <option value="5">Gato (Factor 5)</option>
+            <option value="2">Pato (Factor 2)</option>
+        </select>
+        <br><br>
+        <input type="number" id="edad-mascota" placeholder="Edad en años" step="any" required>
+        <button type="submit" id="btn-calcular">Calcular Edad </button>
+    </form>
+
+    <h3 id="resultado-mascota">Resultado: -</h3>
+
+    <script>
+        // --- 1. Lógica de Negocio ---
+        class AgeCalculator {
+            isValid(age) { return age > 0; }
+
+            convertToHumanYears(age, factorConversion) {
+                return age * factorConversion;
+            }
+        }
+
+        // --- 2. Interfaz de Usuario ---
+        class DOMManager {
+            constructor() {
+                this.inputEdad = document.querySelector('#edad-mascota');
+                this.contenedorResultado = document.querySelector('#resultado-mascota');
+                this.messages = {
+                    error: "Por favor, introduce una edad válida.",
+                    success: (years) => `La edad de tu mascota es de: ${years} años.`
+                };
+                this.colors = { error: "red", success: "blue" };
+            }
+
+            getInputValue() { return Number(this.inputEdad.value); }
+
+            
+            getFactorValue() {
+                const desplegable = document.querySelector('#tipo-mascota'); // Busca el menú desplegable
+                return desplegable ? Number(desplegable.value) : 7; // Si lo encuentra, extrae su valor numérico (7, 6 o 2)
+            }
+
+            renderError() {
+                this.contenedorResultado.textContent = `Resultado: ${this.messages.error}`;
+                this.contenedorResultado.style.color = this.colors.error;
+            }
+
+            renderSuccess(humanYears) {
+                this.contenedorResultado.textContent = `Resultado: ${this.messages.success(humanYears)}`;
+                this.contenedorResultado.style.color = this.colors.success;
+            }
+
+            bindCalculateEvent(handler) {
+                const formulario = document.querySelector('#formulario-mascota');
+                formulario.addEventListener('submit', handler);
+            }
+        }
+
+        // --- 3. Orquestador ---
+        class AppController {
+            constructor(ageCalculator, domManager) {
+                this.ageCalculator = ageCalculator;
+                this.domManager = domManager;
+            }
+
+            init() {
+                this.domManager.bindCalculateEvent((e) => this.handleCalculation(e));
+            } 
+
+            // Captura los datos de la interfaz
+            handleCalculation(e) {
+                e.preventDefault(); // Evita que la página se recargue al pulsar el botón
+
+                const age = this.domManager.getInputValue();
+                const factor = this.domManager.getFactorValue(); 
+
+                if (!this.ageCalculator.isValid(age)) {
+                    this.domManager.renderError();
+                } else {
+                    //  Envía el factor correcto extraído del menú desplegable para calcular
+                    const humanYears = this.ageCalculator.convertToHumanYears(age, factor);
+                    this.domManager.renderSuccess(humanYears);
+                }
+            }
+        }
+
+        // --- 4. ARRANQUE ---
+        const calculator = new AgeCalculator();
+        const dom = new DOMManager();
+        const app = new AppController(calculator, dom);
+        app.init();
+    </script>
+</body>
+</html>

@@ -1,1 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Edad de Mascotas</title>
+</head>
+
+<body>
+    <h1>¿Cuántos años tiene tu mascota realmente?</h1>
+    <p>Introduce la edad de tu mascota para descubrir su edad equivalente.</p>
+    <form id="formulario-mascota">
+        <input type="number" id="edad-mascota" placeholder="Edad de la mascota" required>
+        <button type="submit" id="btn-calcular">Calcular Edad</button>
+
+        <br>
+
+        <select name="factorConversion" id="factor-conversion">
+            <option value="7" selected>Gato (7)</option>
+            <option value="5">Perro (5)</option>
+            <option value="2">Pato (2)</option>
+        </select>
+
+
+    </form>
+    <h3 id="resultado-mascota">Resultado: -</h3>
+    <script>
+
+        
+
+        const AgeCalculator = () => {
+            const isValidAge = (age) => age > 0;
+
+            const convertToHumanYears = (conversionFactor, age) => {
+                if (!isValidAge(age)) throw new Error("Edad no válida");
+                return age * conversionFactor;
+            };
+
+            // Exportamos los métodos públicos
+            return { isValidAge, convertToHumanYears };
+        };
+
+
+
+        class DOMManager {
+            constructor(config) {
+
+                this.IDformulario = config.htmlIDFormulario;
+                this.IDbotonCalcular = config.htmlIDBtnCalcular;
+                this.IDinputEdadMascota = config.htmlIDInputEdadMascota;
+                this.IDresultadoMascota = config.htmlIDResultadoMascota;
+
+
+                this.HTMLformulario = document.querySelector(config.htmlIDFormulario)
+                
+                
+                this.botonCalcular = document.querySelector(this.IDbotonCalcular);
+                this.inputEdadMascota = document.querySelector(this.IDinputEdadMascota);
+                this.resultadoMascota = document.querySelector(this.IDresultadoMascota);
+                this.selectorFactorConversion = config.selectorFactorConversion;
+            }
+
+            getInputValue() {
+                return Number(this.inputEdadMascota.value);
+            }
+
+            getFactorConversion() {
+                this.formulario = new FormData(this.HTMLformulario);
+                return Number(this.formulario.get("factorConversion"));
+                // return Number(document.querySelector(this.selectorFactorConversion).value);
+            }
+
+
+            renderMessage(text, color) {
+                this.resultadoMascota.textContent = "Resultado: " + text;
+                this.resultadoMascota.style.color = color;
+            }
+
+            bindCalculateEvent(handler) {
+                this.botonCalcular.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    handler();
+                });
+
+
+            }
+
+        }
+
+
+        class AppController {
+
+            constructor(ageCalculator, DOMManager, config) {
+                this.ageCalculator = ageCalculator;
+                this.DOMManager = DOMManager;
+                this.config = config;
+            }
+
+            init() {
+                this.DOMManager.bindCalculateEvent(() => this.#handleCalculation());
+            }
+
+            #handleCalculation() {
+                const edadMascota = this.DOMManager.getInputValue();
+
+                const factorConversion = this.DOMManager.getFactorConversion();
+
+                if (this.ageCalculator.isValidAge(edadMascota)) {
+                    const edadMascotaEnHumana = this.ageCalculator.convertToHumanYears(factorConversion, edadMascota);
+                    this.DOMManager.renderMessage(this.config.msjEdadValidaInicio + edadMascotaEnHumana + this.config.msjEdadValidaFin, this.config.colorEdadValida);
+                } else {
+                    this.DOMManager.renderMessage(this.config.msjEdadInvalida, this.config.colorEdadInvalida);
+                }
+            }
+
+
+
+
+        }
+
+
+        // const mininAge = 0; // no usada
+        // const ageConversionFactor = 7; // no usada
+
+        const APPconfig = {
+            msjEdadValidaInicio: "Tu mascota tiene aproximadamente ",
+            msjEdadValidaFin: " años.",
+            msjEdadInvalida: "Por favor, ingresa una edad válida.",
+            colorEdadValida: "green",
+            colorEdadInvalida: "red",
+
+        };
+
+        const domConfig = {
+            htmlIDFormulario: "#formulario-mascota",
+            htmlIDBtnCalcular: "#btn-calcular",
+            htmlIDInputEdadMascota: "#edad-mascota",
+            htmlIDResultadoMascota: "#resultado-mascota",
+            selectorFactorConversion: '[name="factorConversion"]'
+        };
+
+
+        const app = new AppController(AgeCalculator(), new DOMManager(domConfig), APPconfig);
+        app.init();
+
+
+
+        // --------------CHANGELOG--------------------------
+        /**
+         * 
+         * V4.1.1
+         * corregido error de que no se actualizava el factorConversion al cambiar el select
+         * 
+         * Descubierto: formData() guarda los datos del formulario del momento de la instancia.
+         * 
+         * ERROR DE LA V4 Y V4.1:
+         * Han sido testeadas con un parametro GET o POST en la url, haciendo que funcionaran correctamente,
+         * al quitarlo han aparecido otros errores
+         * 
+         * 
+         * 
+         * V4.1 
+         * Descubierto clase FormData
+         * 
+         * aniadido a domConfig el parametro IDformulario: "#formulario-mascota"
+         * creada una instancia de FormData para obtener el valor de factorConversion
+         * ahora es mas independiente
+         * 
+         * 
+         * 
+         * 
+         *  V4
+         *  cambiado los radiobutons factorConversion por un select
+         *  cambiado selectorFactorConversion: '[name="factorConversion"]' para apuntar al select
+         *  
+         * Modificado  
+         * getFactorConversion() {
+         *      return Number(document.querySelector(this.selectorFactorConversion + ":checked").value);
+         *  }
+         * a 
+         *      return Number(document.querySelector(this.selectorFactorConversion).value);
+         * para que coja el select
+        */
+
+
+
+        // --------------PREGUNTA 4 REFLEXIÓN--------------------------
+        /**
+         *  para cmabiar el factor de conversion, solo hay que añadir el nuevo valor al crear la instancia 
+         *  de AgeCalculator en la linea:
+         *          const app = new AppController(new AgeCalculator(), new DOMManager());
+         *
+         *  ya que por defecto lo inicializa en 7 internamente si no recive parametros
+         * 
+         *  este diseño ha hecho que sea facil modificar algunas partes directamente y rapido como los textos o el factor de conversion,
+         *  y hace que aparezcan otras como el parametro/atributo handler en appCOntroller.
+         *  Cada funcion hace su trabajo bajo los principios SOLID
+         * 
+        */
+
+
+    </script>
+</body>
+
+
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Mascotil Desplegable - SOLID</title>
+    <style>
+        .campo-formulario {
+            margin-bottom: 15px;
+        }
+        select, input {
+            padding: 6px;
+            margin-right: 10px;
+            display: block;
+            width: 200px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>¿Cuántos años tiene tu mascota realmente?</h1>
+    <p><strong>Introduce los años de tu mascota para descubrir su edad equivalente.</strong></p>
+    
+    <form id="formulario-mascota">
+        <div class="campo-formulario">
+            <label for="edad">Edad de la mascota:</label>
+            <input type="number" id="edad" placeholder="Edad en años" required>
+        </div>
+        
+        <div class="campo-formulario">
+            <label for="tipo-mascota">Tipo de mascota:</label>
+            <select id="tipo-mascota" required>
+                <option value="" disabled selected>Seleccione mascota</option>
+                <option value="perro">Perro</option>
+                <option value="gato">Gato</option>
+                <option value="pato">Pato</option>
+            </select>
+        </div>
+
+        <button type="button" id="btn-calcular">Calcular Edad mascota</button>
+    </form>
+    
+    <h3 id="resultado-mascota">Resultado: -</h3>
+
+    <script>
+     
+        // ==========================================
+        // 3. CLASE APPCONTROLLER (Orquestador)
+        // ==========================================
+        class AppController {
+            constructor(calculator, dom) {
+                this.calculator = calculator;
+                this.dom = dom;
+            }
+
+            init() {
+                this.dom.bindCalculateEvent(() => this.handleCalculation());
+                this.dom.bindFormSubmitEvent(() => this.handleCalculation());
+            }
+
+            handleCalculation() {
+                const age = this.dom.getInputValue();
+                const petType = this.dom.getSelectedPetType();
+                
+                // MODIFICADO: Ahora validamos tanto la edad como que se haya seleccionado una mascota válida
+                if (!this.calculator.isValidAge(age) || !this.calculator.isValidType(petType)) {
+                    this.dom.renderMessage('Por favor, ingresa una edad mayor a cero y selecciona una mascota.', 'red');
+                    return; // Corta la ejecución si algo falla
+                }
+
+                // Si todo es correcto, calcula y muestra el resultado
+                const result = this.calculator.convertToHumanYears(age, petType);
+                this.dom.renderMessage(`Tu ${petType} tiene aproximadamente ${result} años mascotiles.`, 'blue');
+            }
+        }
+
+        // ==========================================
+        // 1. CLASE AGECALCULATOR (Lógica de Negocio)
+        // ==========================================
+        class AgeCalculator {
+            constructor() {
+                this.factors = {
+                    perro: 7,
+                    gato: 9,
+                    pato: 2
+                };
+            }
+
+            // Cambiado el nombre para ser más explícitos
+            isValidAge(age) {
+                return age > 0; 
+            }
+
+            // NUEVO: Valida que el tipo de mascota exista en nuestro diccionario de factores
+            isValidType(petType) {
+                return petType in this.factors;
+            }
+
+            convertToHumanYears(age, petType) {
+                const factor = this.factors[petType];
+                return age * factor; 
+            }
+        }   
+
+        // ==========================================
+        // 2. CLASE DOMMANAGER (Interfaz de Usuario)
+        // ==========================================
+        class DOMManager {
+            constructor() {
+                this.inputEdad = document.querySelector('#edad'); 
+                this.btnCalcular = document.querySelector('#btn-calcular'); 
+                this.resultadoMascota = document.querySelector('#resultado-mascota'); 
+                this.formulario = document.querySelector('#formulario-mascota');
+                // NUEVO: Captura del elemento select
+                this.selectMascota = document.querySelector('#tipo-mascota');
+            }
+
+            getInputValue() {
+                return Number(this.inputEdad.value); 
+            }
+
+            // MODIFICADO: Retorna el value del select (si está en la opción inicial, devolverá "")
+            getSelectedPetType() {
+                return this.selectMascota.value;
+            }
+
+            renderMessage(text, color) {
+                this.resultadoMascota.textContent = text; 
+                this.resultadoMascota.style.color = color; 
+            }
+
+            bindCalculateEvent(handler) {
+                this.btnCalcular.addEventListener('click', handler); 
+            }
+
+            bindFormSubmitEvent(handler) {
+                this.formulario.addEventListener('submit', (event) => {
+                    event.preventDefault(); 
+                    handler(); 
+                });
+            }
+        }
+
+        // ==========================================
+        // INICIALIZACIÓN
+        // ==========================================
+        const app = new AppController(new AgeCalculator(), new DOMManager());
+        app.init();
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Mascotas</title>
+</head>
+
+<body>
+    <h1>¿Cuántos años tiene tu mascota realmente?</h1>
+    <p>Introduce la edad de tu mascota para descubrir su edad de humano equivalente.</p>
+    <form id="formulario-mascota">
+        <input type="radio" class="radio-animals" name="pet" id="dog-radio" value="7" checked>
+        <label for="dog-radio">Perro</label><br>
+        <input type="radio" class="radio-animals" name="pet" id="cat-radio" value="5">
+        <label for="cat-radio">Gato</label><br>
+        <input type="radio" class="radio-animals" name="pet" id="duck-radio" value="2">
+        <label for="duck-radio">Pato</label><br><br>
+
+        <input type="number" id="edad-mascota" placeholder="Edad de la mascota" required>
+        <button type="submit" id="btn-calcular">Calcular Edad De Mascota</button>
+    </form>
+    <h3 id="resultado-mascota">Resultado: -</h3>
+
+    <script>
+        class AgeCalculator {
+            #conversor;
+
+            constructor(conversor = 7) {
+                this.#conversor = conversor;
+            }
+
+            isValid(age) {
+                return age > 0;
+            }
+
+            convertToHumanAge(age) {
+                return age * this.#conversor;
+            }
+        }
+
+
+        class DOMManager {
+            #inputElement;
+            #calculateAgeButton;
+            #resultContainerElement;
+            #radioGroup;
+            #formElement;
+
+            constructor(intputElement, calculateAgeButton, resultContainerElement, radioGroup, formElement) {
+                this.#inputElement = intputElement;
+                this.#calculateAgeButton = calculateAgeButton;
+                this.#resultContainerElement = resultContainerElement;
+                this.#radioGroup = radioGroup;
+                this.#formElement = formElement;
+            }
+
+            getInputValue() {
+                return parseInt(this.#inputElement.value);
+            }
+
+            renderMessage(text, color) {
+                this.#resultContainerElement.style.color = color;
+                this.#resultContainerElement.textContent = text;
+            }
+
+            getSelectedRadioValue() {
+                for (const radio of this.#radioGroup) {
+                    if (radio.checked) {
+                        return parseInt(radio.value);
+                    }
+                }
+            }
+
+            bindEvents(handler1, handler2, handler3) {
+                this.#calculateAgeButton.addEventListener("click", handler1);
+                this.#radioGroup.forEach(radio => {
+                    radio.addEventListener("change", handler2);
+                });
+                this.#formElement.addEventListener('submit', handler3)
+            }
+        }
+
+
+        class AppController {
+            #ageCalculator;
+            #domManager;
+
+            constructor(ageCalculator, domManager) {
+                this.#ageCalculator = ageCalculator;
+                this.#domManager = domManager;
+            }
+
+            init() {
+                this.#domManager.bindEvents(
+                    () => this.#handleCalculation(),
+                    () => this.#handleRadioCehckedValue(),
+                    (event) => this.#handleSubmitWithEnter(event)
+                );
+            }
+
+            #handleCalculation() {
+                let petAge = this.#domManager.getInputValue();
+                let validAge = this.#ageCalculator.isValid(petAge);
+
+                if (validAge) {
+                    let humanAge = this.#ageCalculator.convertToHumanAge(petAge);
+                    this.#domManager.renderMessage(`Resultado: La edad en años humanos de tu mascota es ${humanAge} años.`, "blue");
+                } else {
+                    this.#domManager.renderMessage("ERROR: Introduce un número entero mayor que 0.", "red");
+                }
+            }
+
+            #handleRadioCehckedValue() {
+                let petConversor = this.#domManager.getSelectedRadioValue();
+                this.#ageCalculator = new AgeCalculator(petConversor);
+            }
+
+            #handleSubmitWithEnter(event) {
+                event.preventDefault();
+                this.#handleCalculation();
+            }
+        }
+
+
+        const inputEdadMascota = document.querySelector("#edad-mascota");
+        const botonCalcularEdad = document.querySelector("#btn-calcular");
+        const contenedorResultado = document.querySelector("#resultado-mascota");
+        const petsForm = document.getElementById('formulario-mascota');
+        const petsRadioGroup = document.querySelectorAll('.radio-animals');
+
+        const ageCalculator = new AgeCalculator();
+        const domManager = new DOMManager(inputEdadMascota, botonCalcularEdad, contenedorResultado, petsRadioGroup, petsForm);
+        const controller = new AppController(ageCalculator, domManager);
+
+        controller.init();
+
+        /*
+        REFLEXIÓN: Simplemente habría que incluir ese número en el constructor de AgeCalculator y no afectaría en nada al resto del programa debido al bajo acoplamiento y la separación clara de responsabilidades.
+        */
+    </script>
+</body>
+
+</html>
