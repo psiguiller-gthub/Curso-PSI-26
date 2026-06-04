@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Control de Acceso</h1>
+    <img src="./portero.jpg" alt="portero" width="200" height="200">
+    <button id="btn-ponerte-cola">Hacer cola</button>
+<br><br>
+    <form id="formulario-comprobar-edad">
+        <input type="number" id="edad" placeholder="Edad" required>
+        
+        <button type="button" id="acceso">Comprobar Edad</button>
+    </form>
+
+    <h3 id="edad-comprobar"></h3>
+
+    <script>
+
+        const botonLike = document.querySelector('#btn-ponerte-cola');
+        const mostrarAlerta = () => alert("¡Te pusistes en cola!");
+        botonLike.addEventListener('click', mostrarAlerta);
+
+        // const botonLike = document.querySelector('#btn-ponerte-cola');
+        // botonLike.addEventListener('click', () => alert("¡Te pusistes en cola! "));
+        
+        const mayorEdad = 18; // Variable para la edad de mayoría de edad
+        const isMayorEdad = (edad) => edad >= 18;
+        const porteroDiscoteca = (edad) => isMayorEdad(edad) ? "Bienvenido!" : "Lo siento, no puedes entrar."; 
+
+        const botonComprobarEdad = document.querySelector('#acceso');
+        const contenedorResultado = document.querySelector('#edad-comprobar');
+
+        botonComprobarEdad.addEventListener('click', () => {
+            const edad = Number(document.querySelector('#edad').value);
+
+            contenedorResultado.textContent = porteroDiscoteca(edad);
+        });
+
+                const division = dividir(valor1, valor2);
+                contenedorResultado.textContent = "Resultado: " + division;
+                contenedorResultado.style.color = "green";
+            
+        
+
+    </script>
+</body>
+
+</html>
