@@ -1,0 +1,49 @@
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    margin: 20px;
+}
+
+h2 {
+    color: #333;
+}
+
+/* Contenedor de la tabla | # apunta a los ID  */
+#clientes {    
+    margin-top: 20px;
+}
+
+/* Tabla */
+table {
+    border-collapse: collapse;
+    width: 60%;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Encabezados */
+th {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Celdas */
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Efecto hover en filas, cambio visual cuando coloca el cursor del ratón encima */
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Alternar colores en filas */
+tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+</style>
