@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Cálculo de Pedido</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #ddc0c0;
+        }
+
+        .grupo {
+            margin-bottom: 15px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+    <h1>Calcula tu Total</h1>
+
+    <div class="grupo">
+        <label for="cantidad">Importe del pedido (€):</label>
+        <input type="number" id="cantidad" min="0" placeholder="Ej: 50" >
+    </div>
+
+    <div class="grupo">
+        <label>Tipo de envío:</label><br>
+        <input type="radio" name="envio" value="5" checked> Estándar (5.00 €)<br>
+        <input type="radio" name="envio" value="15"> Rápido (15.00 €)<br>
+        <input type="radio" name="envio" value="50"> MuyMuyUrgente (50.00 €)<br>
+    </div>
+
+    <div class="grupo">
+        <button onclick="calcularTotal()">Calcular</button>
+    </div>
+
+    <div class="grupo">
+        <label for="resultado">Total a pagar (€):</label>
+        <input type="text" id="resultado" readonly>
+    </div>
+
+
+
+    <script>
+        function calcularTotal() {
+
+            let importePedido = parseFloat(document.getElementById('cantidad').value) || 0;
+
+            let costoEnvio = parseFloat(document.querySelector('input[name="envio"]:checked').value);
+
+            let sumaTotal = importePedido + costoEnvio;
+
+            document.getElementById('resultado').value = sumaTotal.toFixed(2);
+        }
+    </script>
+
+</body>
+
+</html>

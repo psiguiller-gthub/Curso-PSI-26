@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>El portero de Maslasaña</h1>
+    <img src="./5fd07bb2d663a.jpeg" alt="Foto de Fechita" width="200" height="200">
+    <button id="btn-like">Me Gusta</button>
+<br><br>
+    <form id="PorteroDiscoteca">
+        <input type="number" id="num1" placeholder="Dime la edad piltrafilla" required>
+        <<!-- <input type="number" id="num2" placeholder="Segundo número" required> -->>
+        <button type="button" id="btn-comprobar">Comprobar</button>
+    </form>
+
+    <h3 id="resultado">Resultado: </h3>
+
+    <script>
+
+        const botonLike = document.querySelector('#btn-like');
+        const mostrarAlerta = () => alert("¡Le diste Me Gusta a esta foto!");
+        botonLike.addEventListener('click', mostrarAlerta);
+
+    
+        //const isZero = (numero) => numero === 0;
+
+        //const dividir = (a, b) => a / b;
+
+        const botonComprobar = document.querySelector('#btn-comprobar');
+        const contenedorResultado = document.querySelector('#num1');
+
+            botonComprobar.addEventListener('click', () => {
+        const valor1 = Number(document.querySelector('#num1').value);
+            //const valor2 = Number(document.querySelector('#num2').value);
+
+            //if (isZero(valor2)) {
+                //contenedorResultado.textContent = "Resultado:  ERROR No se puede dividir entre cero.";
+                //contenedorResultado.style.color = "red";
+            //} else {
+                //const division = dividir(valor1, valor2);
+                //contenedorResultado.textContent = "Resultado: " + division;
+                //contenedorResultado.style.color = "green";
+            }
+        });
+            //const comprobar = dividir(valor1, valor2);
+            const isMayorEdad = edad => edad >= 18;
+            const porteroDisco = (edad) => {
+                if (isMayorEdad(edad)) {
+                    contenedorResultado.textContent = "Resultado: PA DENTRO, BIENVENIDO A LA DISCOTECA.";
+                    contenedorResultado.style.color = "green";
+                } else {
+                    contenedorResultado.textContent = "Resultado: Lo siento, no puedes entrar a la discoteca.";
+                    contenedorResultado.style.color = "red";
+                }
+            };
+
+    </script>
+</body>
+
+</html>

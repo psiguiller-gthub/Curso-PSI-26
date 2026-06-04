@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Fotos de Fechita</h1>
+    <img src="./5fd07bb2d663a.jpeg" alt="Foto de Fechita" width="200" height="200">
+    <button id="btn-like">Me Gusta</button>
+<br><br>
+    <form id="formulario-division">
+        <input type="number" id="num1" placeholder="Primer número" required>
+        <input type="number" id="num2" placeholder="Segundo número" required>
+        <button type="button" id="btn-dividir">Dividir</button>
+    </form>
+
+    <h3 id="resultado">Resultado: </h3>
+
+<br><br>
+
+
+    <form id="formulario-mayor-edad">
+            <input type="number" id="edad" placeholder="Ingresa tu edad" required>
+            <button type="button" id="btn-verificar-edad">Verificar Edad</button>
+            <input disabled id="resultado-edad" placeholder="Resultado" readonly>
+    </form>
+
+
+    <script>
+
+        const ENVmayoriaEdad = 18;
+
+        const botonVerificarEdad = document.querySelector("#btn-verificar-edad");
+        const resultadoEdad = document.querySelector("#resultado-edad");
+        const inputEdad = document.querySelector("#edad");
+
+        const verificarEdad = (edad) => {
+            if (edad >= ENVmayoriaEdad) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+
+        botonVerificarEdad.addEventListener("click", () => {
+            const edad = Number(inputEdad.value);
+            
+            if (verificarEdad(edad)) {
+                resultadoEdad.value = "Eres mayor de edad.";
+                resultadoEdad.style.color = "green";
+            } else {
+                resultadoEdad.value = "Eres menor de edad.";
+                resultadoEdad.style.color = "red";
+            }
+
+        });
+
+    </script>
+
+
+
+    <script>
+
+        const botonLike = document.querySelector('#btn-like');
+        const mostrarAlerta = () => alert("¡Le diste Me Gusta a esta foto!");
+        botonLike.addEventListener('click', mostrarAlerta);
+
+        // const botonLike = document.querySelector('#btn-like');
+        // botonLike.addEventListener('click', () => alert("¡Le diste Me Gusta a esta foto! "));
+        
+        const isZero = (numero) => numero === 0;
+
+        const dividir = (a, b) => a / b;
+
+        const botonDividir = document.querySelector('#btn-dividir');
+        const contenedorResultado = document.querySelector('#resultado');
+
+        botonDividir.addEventListener('click', () => {
+            const valor1 = Number(document.querySelector('#num1').value);
+            const valor2 = Number(document.querySelector('#num2').value);
+
+            if (isZero(valor2)) {
+                contenedorResultado.textContent = "Resultado:  ERROR No se puede dividir entre cero.";
+                contenedorResultado.style.color = "red";
+            } else {
+                const division = dividir(valor1, valor2);
+                contenedorResultado.textContent = "Resultado: " + division;
+                contenedorResultado.style.color = "green";
+            }
+        });
+
+    </script>
+</body>
+
+</html>

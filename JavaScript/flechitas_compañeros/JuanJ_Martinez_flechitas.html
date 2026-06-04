@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotos de Fechita</title>
+    <style>
+        /* Separamos un poco los estilos básicos para evitar etiquetas <br> */
+        form {
+            margin-top: 20px;
+        }
+        .error {
+            color: #dc3545;
+        }
+        .success {
+            color: #28a745;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <header>
+        <h1>Fotos de Fechita</h1>
+    </header>
+
+    <main>
+        <section>
+            <img src="./5fd07bb2d663a.jpeg" alt="Foto de Fechita" width="200" height="200">
+            <button type="button" id="btn-like">Me Gusta</button>
+        </section>
+
+        <section>
+            <form id="formulario-division">
+                <input type="number" id="num1" placeholder="Primer número" required>
+                <input type="number" id="num2" placeholder="Segundo número" required>
+                <button type="submit">Dividir</button>
+            </form>
+
+            <h3 id="resultado">Resultado: </h3>
+        </section>
+    </main>
+
+    <script>
+        // --- selectores del DOM ---
+        const botonLike = document.querySelector('#btn-like');
+        const formulario = document.querySelector('#formulario-division');
+        const inputNum1 = document.querySelector('#num1');
+        const inputNum2 = document.querySelector('#num2');
+        const contenedorResultado = document.querySelector('#resultado');
+
+        // --- Funciones de Lógica pura (Helpers) ---
+        const isZero = (numero) => numero === 0;
+        const dividir = (a, b) => a / b;
+
+        // --- Manejadores de Eventos (Handlers) ---
+        botonLike.addEventListener('click', () => alert("¡Le diste Me Gusta a esta foto!"));
+
+        formulario.addEventListener('submit', (evento) => {
+            // Evitamos que la página se recargue al enviar el formulario
+            evento.preventDefault(); 
+
+            const valor1 = Number(inputNum1.value);
+            const valor2 = Number(inputNum2.value);
+
+            // Limpiamos las clases anteriores del contenedor de resultados
+            contenedorResultado.className = "";
+
+            if (isZero(valor2)) {
+                contenedorResultado.textContent = "Resultado: ERROR. No se puede dividir entre cero.";
+                contenedorResultado.classList.add("error");
+            } else {
+                const resultadoDivision = dividir(valor1, valor2);
+                contenedorResultado.textContent = `Resultado: ${resultadoDivision}`;
+                contenedorResultado.classList.add("success");
+            }
+        });
+    </script>
+</body>
+
+</html>

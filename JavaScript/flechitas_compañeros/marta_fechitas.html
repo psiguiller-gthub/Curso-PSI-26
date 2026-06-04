@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Fotos de Fechita</h1>
+    <img src="./5fd07bb2d663a.jpeg" alt="Foto de Fechita" width="200" height="200">
+    <button id="btn-like">Me Gusta</button>
+<br><br>
+    <form id="portero">
+        <input type="number" id="num1" placeholder="Edad" required>
+        <button type="button" id="btn-portero">Entrar</button>
+    </form>
+
+    <h3 id="resultado">Resultado: </h3>
+
+    <script>
+
+        const botonLike = document.querySelector('#btn-like');
+        const mostrarAlerta = () => alert("¡Le diste Me Gusta a esta foto!");
+        botonLike.addEventListener('click', mostrarAlerta);
+
+        // const botonLike = document.querySelector('#btn-like');
+        // botonLike.addEventListener('click', () => alert("¡Le diste Me Gusta a esta foto! "));
+        
+        const isZero = (numero) => numero === 0;
+        const isMayorEdad = age => age >= 18;
+        
+
+        const dividir = (a, b) => a / b;
+
+        const botonDividir = document.querySelector('#btn-dividir');
+        const contenedorResultado = document.querySelector('#resultado');
+
+        const botonEntrar = document.querySelector('#btn-portero');
+
+        botonEntrar.addEventListener('click', () => {
+            const edad = Number(document.querySelector('#num1').value);
+            const porteroDisco = isMayorEdad(edad) ;
+
+            if (porteroDisco) {
+                contenedorResultado.textContent = "Resultado: Puedes entrar";
+                contenedorResultado.style.color = "green";
+            } else {
+                contenedorResultado.textContent = "Resultado: No puedes entrar";
+                
+                contenedorResultado.style.color = "red";
+            }
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Fotos de Fechita</h1>
+    <img src="./5fd07bb2d663a.jpeg" alt="Foto de Fechita" width="200" height="200">
+    <button id="btn-like">Me Gusta</button>
+<br><br>
+    <form id="formulario-division">
+        <input type="number" id="num1" placeholder="Primer número" required>
+        <input type="number" id="num2" placeholder="Segundo número" required>
+        <input type="number" id="edad" placeholder="Edad para portero" required>
+        <button type="button" id="btn-dividir">Dividir</button>
+        <button type="button" id="btn-portero">Portero</button>
+    </form>
+
+    <h3 id="resultado">Resultado: </h3>
+
+    <script>
+
+        const botonLike = document.querySelector('#btn-like');
+        const mostrarAlerta = () => alert("¡Le diste Me Gusta a esta foto!");
+        botonLike.addEventListener('click', mostrarAlerta);
+
+        // const botonLike = document.querySelector('#btn-like');
+        // botonLike.addEventListener('click', () => alert("¡Le diste Me Gusta a esta foto! "));
+        
+        const isZero = (numero) => numero === 0;
+
+        const dividir = (a, b) => a / b;
+
+        const botonDividir = document.querySelector('#btn-dividir');
+        const contenedorResultado = document.querySelector('#resultado');
+
+        botonDividir.addEventListener('click', () => {
+            const valor1 = Number(document.querySelector('#num1').value);
+            const valor2 = Number(document.querySelector('#num2').value);
+
+            if (isZero(valor2)) {
+                contenedorResultado.textContent = "Resultado:  ERROR No se puede dividir entre cero.";
+                contenedorResultado.style.color = "red";
+            } else {
+                const division = dividir(valor1, valor2);
+                contenedorResultado.textContent = "Resultado: " + division;
+                contenedorResultado.style.color = "green";
+            }
+        });
+
+        const isMayorEdad = (edad) => edad >= 18;
+
+const porteroDiscoteca = (edad) => {
+
+    if(isMayorEdad(edad)) {
+        return "Puedes entrar";
+    }
+    else {
+        return "No puedes entrar";
+    }
+};
+
+
+const botonEntrar = document.querySelector('#btn-entrar');
+const contResultado = document.querySelector('#resultado');
+
+
+botonEntrar.addEventListener('click', () => {
+
+    const edad = Number(document.querySelector('#edad').value);
+
+    const resultado = porteroDiscoteca(edad);
+
+    contenedorResultado.textContent = resultado;
+
+    if(isMayorEdad(edad)) {
+        contenedorResultado.style.color = "green";
+    }
+    else {
+        contenedorResultado.style.color = "red";
+    }
+});
+ </script>
+</body>
+
+</html>

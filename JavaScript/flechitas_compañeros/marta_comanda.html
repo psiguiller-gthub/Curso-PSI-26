@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="estilopizzeria.css">
+  <title>Pizzería</title>
+</head>
+<body>
+
+<h2>Elige tu pizza 🍕</h2>
+
+<!-- 1. Tipo de pizza -->
+<h3>Tipo de pizza</h3>
+<select id="pizza">
+  <option value="9.95">Primavera (9,95€)</option>
+  <option value="12.45">4 Quesos(12,45€)</option>
+  <option value="15.90">Diavola (15,90€)</option>
+</select>
+
+<!-- 2. Extras -->
+<h3>Extras</h3>
+<label><input type="checkbox" value="2"> Borde de queso (+2€)</label><br>
+<label><input type="checkbox" value="1.5"> Queso (+1.5€)</label><br>
+<label><input type="checkbox" value="1"> Piña (+1€)</label><br>
+<label><input type="checkbox" value="3"> Pepperoni (+3€)</label><br>
+<label><input type="checkbox" value="0.5"> Champiñones (+0,50€)</label><br>
+
+<!-- 3. Envío -->
+<h3>Tipo de envío</h3>
+<label><input type="radio" name="envio" value="0" checked> Recoger en tienda (0€)</label><br>
+<label><input type="radio" name="envio" value="2"> Envío Express(2€)</label><br>
+<label><input type="radio" name="envio" value="5"> Envío Luxe (5€)</label><br>
+
+<br><br>
+
+<button onclick="calcular()">Calcular total</button>
+
+<p id="resultado"></p>
+
+<script>
+function calcular() {
+
+  // Pizza
+  const pizzaPrice = parseFloat(document.getElementById("pizza").value);
+
+  // Extras
+  const extras = document.querySelectorAll('input[type="checkbox"]:checked');
+  let extrasTotal = 0;
+
+  extras.forEach(extra => {
+    extrasTotal += parseFloat(extra.value);
+  });
+
+  // Envío
+  const envioPrice = parseFloat(document.querySelector('input[name="envio"]:checked').value);
+
+  // Total
+  const total = pizzaPrice + extrasTotal + envioPrice;
+
+  // Mostrar resultado
+  const resultado = document.getElementById("resultado");
+
+  resultado.innerHTML = `
+    Pizza: <b>${pizzaPrice.toFixed(2)}€</b><br>
+    Extras: <b>${extrasTotal.toFixed(2)}€</b><br>
+    Envío: <b>${envioPrice.toFixed(2)}€</b><br><br>
+    TOTAL: <b>${total.toFixed(2)}€</b>
+  `;
+
+  resultado.style.display = "block";
+}
+</script>
+
+</body>
+</html>
